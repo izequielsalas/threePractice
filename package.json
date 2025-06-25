@@ -1,5 +1,5 @@
 {
-  "name": "threepractice",
+  "name": "three-practice",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,10 +8,22 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "vite": "^6.3.5"
-  },
   "dependencies": {
-    "three": "^0.177.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@react-three/fiber": "^8.15.19",
+    "@react-three/drei": "^9.92.7",
+    "@react-three/postprocessing": "^2.15.11",
+    "framer-motion": "^10.16.16",
+    "gsap": "^3.12.2",
+    "lenis": "^1.0.42",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.158.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.3.4"
   }
 }
