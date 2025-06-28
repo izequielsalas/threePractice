@@ -175,8 +175,8 @@ function LoadingScreen({ progress, onComplete }) {
   );
 }
 
-// Enhanced Navigation with hamburger menu
-function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu, setShowMobileMenu }) {
+// Enhanced Navigation with smooth scrolling
+function Navigation({ isMobile, showMobileMenu, setShowMobileMenu }) {
   const sections = [
     { id: 'hero', label: 'Home', icon: '🏠' },
     { id: 'about', label: 'About', icon: '👨‍💻' },
@@ -184,6 +184,19 @@ function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu,
     { id: 'skills', label: 'Skills', icon: '⚡' },
     { id: 'contact', label: 'Contact', icon: '📞' }
   ];
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    if (isMobile) {
+      setShowMobileMenu(false);
+    }
+  };
 
   if (isMobile) {
     return (
@@ -228,20 +241,13 @@ function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu,
             {sections.map((section) => (
               <button
                 key={section.id}
-                onClick={() => {
-                  setActiveSection(section.id);
-                  setShowMobileMenu(false);
-                }}
+                onClick={() => scrollToSection(section.id)}
                 style={{
-                  background: activeSection === section.id 
-                    ? 'rgba(0, 255, 136, 0.3)' 
-                    : 'transparent',
-                  border: activeSection === section.id 
-                    ? '1px solid #00ff88' 
-                    : '1px solid transparent',
+                  background: 'transparent',
+                  border: '1px solid transparent',
                   borderRadius: '8px',
                   padding: '0.75rem 1rem',
-                  color: activeSection === section.id ? '#00ff88' : 'white',
+                  color: 'white',
                   cursor: 'pointer',
                   fontSize: '0.9rem',
                   fontWeight: 500,
@@ -250,6 +256,14 @@ function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu,
                   alignItems: 'center',
                   gap: '0.5rem',
                   transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'rgba(0, 255, 136, 0.2)';
+                  e.target.style.color = '#00ff88';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = 'white';
                 }}
               >
                 <span>{section.icon}</span>
@@ -276,18 +290,14 @@ function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu,
       {sections.map((section) => (
         <button
           key={section.id}
-          onClick={() => setActiveSection(section.id)}
+          onClick={() => scrollToSection(section.id)}
           style={{
-            background: activeSection === section.id 
-              ? 'rgba(0, 255, 136, 0.3)' 
-              : 'rgba(0, 0, 0, 0.7)',
+            background: 'rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
-            border: activeSection === section.id 
-              ? '1px solid #00ff88' 
-              : '1px solid rgba(255, 255, 255, 0.2)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
             borderRadius: '8px',
             padding: '0.5rem 1rem',
-            color: activeSection === section.id ? '#00ff88' : 'white',
+            color: 'white',
             cursor: 'pointer',
             fontSize: '0.8rem',
             fontWeight: 500,
@@ -298,16 +308,16 @@ function Navigation({ activeSection, setActiveSection, isMobile, showMobileMenu,
             gap: '0.5rem'
           }}
           onMouseEnter={(e) => {
-            if (activeSection !== section.id) {
-              e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-              e.target.style.transform = 'scale(1.05)';
-            }
+            e.target.style.background = 'rgba(0, 255, 136, 0.3)';
+            e.target.style.border = '1px solid #00ff88';
+            e.target.style.color = '#00ff88';
+            e.target.style.transform = 'scale(1.05)';
           }}
           onMouseLeave={(e) => {
-            if (activeSection !== section.id) {
-              e.target.style.background = 'rgba(0, 0, 0, 0.7)';
-              e.target.style.transform = 'scale(1)';
-            }
+            e.target.style.background = 'rgba(0, 0, 0, 0.7)';
+            e.target.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+            e.target.style.color = 'white';
+            e.target.style.transform = 'scale(1)';
           }}
         >
           <span>{section.icon}</span>
@@ -344,25 +354,10 @@ function GlassCard({ children, style = {}, animate = true }) {
   );
 }
 
-// Section transition wrapper
-function Section({ isActive, children, className = "" }) {
-  return (
-    <div style={{
-      opacity: isActive ? 1 : 0,
-      transform: isActive ? 'translateX(0)' : 'translateX(-20px)',
-      transition: 'all 0.5s ease',
-      display: isActive ? 'block' : 'none'
-    }}>
-      {children}
-    </div>
-  );
-}
-
 // Main App Component
 function App() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState('hero');
   const [isMobile, setIsMobile] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -397,37 +392,38 @@ function App() {
     setLoading(false);
   };
 
+  const scrollToProjects = () => {
+    const element = document.getElementById('projects');
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   if (loading) {
     return <LoadingScreen progress={progress} onComplete={handleLoadingComplete} />;
   }
 
   return (
-    <div style={{
-      width: '100vw',
-      minHeight: '100vh',
-      background: 'radial-gradient(ellipse at center, #000000 0%, #0a0a0a 50%, #000000 100%)',
-      color: 'white',
-      fontFamily: 'Inter, sans-serif',
-      position: 'relative',
-      overflow: isMobile ? 'auto' : 'hidden'
-    }}>
+    <>
       {/* Navigation */}
       <Navigation 
-        activeSection={activeSection} 
-        setActiveSection={setActiveSection}
         isMobile={isMobile}
         showMobileMenu={showMobileMenu}
         setShowMobileMenu={setShowMobileMenu}
       />
 
-      {/* 3D Background */}
+      {/* 3D Background - Fixed behind everything */}
       <div style={{
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 1
+        zIndex: -1,
+        pointerEvents: 'none'
       }}>
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <ambientLight intensity={0.6} />
@@ -449,165 +445,428 @@ function App() {
         </Canvas>
       </div>
 
-      {/* Content Sections */}
+      {/* Main Content - Normal Document Flow */}
       <div style={{
-        position: 'relative',
-        zIndex: 10,
+        background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(10,10,10,0.9) 50%, rgba(0,0,0,0.8) 100%)',
+        color: 'white',
+        fontFamily: 'Inter, sans-serif',
         minHeight: '100vh',
-        padding: isMobile ? '6rem 1rem 2rem' : '0 5%'
+        width: '100%'
       }}>
         {/* Hero Section */}
-        <Section isActive={activeSection === 'hero'}>
-          <div style={{
-            height: isMobile ? 'auto' : '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start'
-          }}>
-            <div style={{ maxWidth: '600px' }}>
-              <h1 style={{
-                fontSize: isMobile ? '2.5rem' : 'clamp(3rem, 8vw, 5rem)',
-                fontWeight: 900,
-                margin: '0 0 1rem 0',
-                background: 'linear-gradient(135deg, #00ff88, #ffffff)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                lineHeight: 1.1,
-                animation: 'fadeInUp 1s ease'
-              }}>
-                IZEQUIEL<br />SALAS
-              </h1>
-              <p style={{
-                fontSize: isMobile ? '1.2rem' : 'clamp(1.2rem, 4vw, 2rem)',
-                color: '#00ff88',
-                margin: '0 0 1rem 0',
-                fontWeight: 300,
-                animation: 'fadeInUp 1s ease 0.2s both'
-              }}>
-                Full Stack Developer
-              </p>
-              <p style={{
-                fontSize: isMobile ? '1rem' : 'clamp(1rem, 2.5vw, 1.2rem)',
-                color: '#ccc',
-                lineHeight: 1.6,
-                margin: '0 0 2rem 0',
-                animation: 'fadeInUp 1s ease 0.4s both'
-              }}>
-                CS grad with 12+ years in the family print business, now building web applications 
-                that solve real problems for real businesses.
-              </p>
-              <button 
-                onClick={() => setActiveSection('projects')}
-                style={{
-                  background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                  border: 'none',
-                  padding: '1rem 2rem',
-                  borderRadius: '50px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 20px rgba(0, 255, 136, 0.3)',
-                  animation: 'fadeInUp 1s ease 0.6s both'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.05)';
-                  e.target.style.boxShadow = '0 6px 30px rgba(0, 255, 136, 0.5)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = '0 4px 20px rgba(0, 255, 136, 0.3)';
-                }}
-              >
-                View My Work
-              </button>
-            </div>
+        <section id="hero" style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: isMobile ? '6rem 1rem 4rem' : '0 5%'
+        }}>
+          <div style={{ maxWidth: '600px' }}>
+            <h1 style={{
+              fontSize: isMobile ? '2.5rem' : 'clamp(3rem, 8vw, 5rem)',
+              fontWeight: 900,
+              margin: '0 0 1rem 0',
+              background: 'linear-gradient(135deg, #00ff88, #ffffff)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              lineHeight: 1.1,
+              animation: 'fadeInUp 1s ease'
+            }}>
+              IZEQUIEL<br />SALAS
+            </h1>
+            <p style={{
+              fontSize: isMobile ? '1.2rem' : 'clamp(1.2rem, 4vw, 2rem)',
+              color: '#00ff88',
+              margin: '0 0 1rem 0',
+              fontWeight: 300,
+              animation: 'fadeInUp 1s ease 0.2s both'
+            }}>
+              Full Stack Developer
+            </p>
+            <p style={{
+              fontSize: isMobile ? '1rem' : 'clamp(1rem, 2.5vw, 1.2rem)',
+              color: '#ccc',
+              lineHeight: 1.6,
+              margin: '0 0 2rem 0',
+              animation: 'fadeInUp 1s ease 0.4s both'
+            }}>
+              CS grad with 12+ years in the family print business, now building web applications 
+              that solve real problems for real businesses.
+            </p>
+            <button 
+              onClick={scrollToProjects}
+              style={{
+                background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                border: 'none',
+                padding: '1rem 2rem',
+                borderRadius: '50px',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(0, 255, 136, 0.3)',
+                animation: 'fadeInUp 1s ease 0.6s both'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'scale(1.05)';
+                e.target.style.boxShadow = '0 6px 30px rgba(0, 255, 136, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'scale(1)';
+                e.target.style.boxShadow = '0 4px 20px rgba(0, 255, 136, 0.3)';
+              }}
+            >
+              View My Work
+            </button>
           </div>
-        </Section>
+        </section>
 
         {/* About Section */}
-        <Section isActive={activeSection === 'about'}>
-          <div style={{
-            minHeight: isMobile ? 'auto' : '100vh',
-            paddingTop: isMobile ? '2rem' : '5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <div style={{ maxWidth: '1000px', width: '100%' }}>
-              <h2 style={{
-                fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
-                fontWeight: 700,
-                margin: '0 0 2rem 0',
-                color: '#00ff88',
-                textAlign: 'center'
-              }}>
-                About Me
-              </h2>
-              
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
-                gap: '2rem'
-              }}>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0', fontSize: '1.3rem' }}>My Journey</h3>
-                  <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
-                    My path to development wasn't traditional. Right when I entered high school in 2012, I started 
-                    working with my brother at his print business, Cesargraphics. What began as helping out 
-                    the family business became a 12-year education in how small businesses really operate.
-                  </p>
-                  <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
-                    While working full-time at Cesargraphics, I pursued my Computer Science degree at ASU, 
-                    graduating in December 2023. This unique combination gave me something most developers 
-                    don't have: years of real-world business experience paired with fresh technical knowledge.
-                  </p>
-                  <div style={{ 
-                    color: '#00ff88', 
-                    margin: 0, 
-                    fontStyle: 'italic',
-                    padding: '1rem',
-                    background: 'rgba(0, 255, 136, 0.1)',
-                    borderRadius: '8px',
-                    borderLeft: '3px solid #00ff88'
-                  }}>
-                    "I understand both the code and the business reality of what makes websites actually work"
-                  </div>
-                </GlassCard>
+        <section id="about" style={{
+          minHeight: '100vh',
+          padding: isMobile ? '5rem 1rem' : '5rem 5%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{ maxWidth: '1000px', width: '100%' }}>
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
+              fontWeight: 700,
+              margin: '0 0 2rem 0',
+              color: '#00ff88',
+              textAlign: 'center'
+            }}>
+              About Me
+            </h2>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+              gap: '2rem'
+            }}>
+              <GlassCard>
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0', fontSize: '1.3rem' }}>My Journey</h3>
+                <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
+                  My path to development wasn't traditional. Right when I entered high school in 2012, I started 
+                  working with my brother at his print business, Cesargraphics. What began as helping out 
+                  the family business became a 12-year education in how small businesses really operate.
+                </p>
+                <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
+                  While working full-time at Cesargraphics, I pursued my Computer Science degree at ASU, 
+                  graduating in December 2023. This unique combination gave me something most developers 
+                  don't have: years of real-world business experience paired with fresh technical knowledge.
+                </p>
+                <div style={{ 
+                  color: '#00ff88', 
+                  margin: 0, 
+                  fontStyle: 'italic',
+                  padding: '1rem',
+                  background: 'rgba(0, 255, 136, 0.1)',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #00ff88'
+                }}>
+                  "I understand both the code and the business reality of what makes websites actually work"
+                </div>
+              </GlassCard>
 
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0', fontSize: '1.3rem' }}>My Approach</h3>
-                  <div style={{ display: 'grid', gap: '1.5rem' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🎯</div>
-                      <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>Business-First</h4>
-                      <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>Your website is a business tool first. Every feature should drive results.</p>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🤝</div>
-                      <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>True Partnership</h4>
-                      <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>I work with clients, not for them. Your success is my success.</p>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚡</div>
-                      <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>Results-Focused</h4>
-                      <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>Fast loading, easy to update, built to convert. Period.</p>
-                    </div>
+              <GlassCard>
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0', fontSize: '1.3rem' }}>My Approach</h3>
+                <div style={{ display: 'grid', gap: '1.5rem' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🎯</div>
+                    <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>Business-First</h4>
+                    <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>Your website is a business tool first. Every feature should drive results.</p>
                   </div>
-                </GlassCard>
-              </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🤝</div>
+                    <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>True Partnership</h4>
+                    <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>I work with clients, not for them. Your success is my success.</p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚡</div>
+                    <h4 style={{ color: '#00ff88', margin: '0 0 0.5rem 0' }}>Results-Focused</h4>
+                    <p style={{ color: '#ccc', fontSize: '0.9rem', margin: 0 }}>Fast loading, easy to update, built to convert. Period.</p>
+                  </div>
+                </div>
+              </GlassCard>
             </div>
           </div>
-        </Section>
+        </section>
 
         {/* Projects Section */}
-        <Section isActive={activeSection === 'projects'}>
-          <div style={{
-            minHeight: isMobile ? 'auto' : '100vh',
-            paddingTop: isMobile ? '2rem' : '5rem'
+        <section id="projects" style={{
+          minHeight: '100vh',
+          padding: isMobile ? '5rem 1rem' : '5rem 5%'
+        }}>
+          <h2 style={{
+            fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
+            fontWeight: 700,
+            margin: '0 0 3rem 0',
+            color: '#00ff88',
+            textAlign: 'center'
           }}>
+            Featured Projects
+          </h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
+            gap: '2rem',
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            <GlassCard>
+              <div style={{
+                width: '100%',
+                height: '200px',
+                background: 'linear-gradient(135deg, #cc00ff, #00ff88)',
+                borderRadius: '10px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.1rem'
+              }}>
+                Website Builder
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
+                  Small Business Website Builder
+                </h3>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  color: '#00ff88',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 500
+                }}>
+                  Live
+                </span>
+              </div>
+              <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
+                A drag-and-drop website builder specifically designed for small businesses. 
+                Includes templates, hosting, domain management, and integrated booking/payment systems. 
+                Currently serving 15+ local businesses.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                {['React', 'Firebase', 'Stripe', 'Node.js'].map(tech => (
+                  <span key={tech} style={{
+                    background: 'rgba(204, 0, 255, 0.2)',
+                    color: '#cc00ff',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '5px',
+                    fontSize: '0.7rem',
+                    fontWeight: 500
+                  }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button style={{
+                  background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  Live Demo
+                </button>
+                <button style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  View Code
+                </button>
+              </div>
+            </GlassCard>
+
+            <GlassCard>
+              <div style={{
+                width: '100%',
+                height: '200px',
+                background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                borderRadius: '10px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.1rem'
+              }}>
+                E-commerce Platform
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
+                  E-commerce Platform
+                </h3>
+                <span style={{
+                  background: 'rgba(255, 204, 0, 0.2)',
+                  color: '#ffcc00',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 500
+                }}>
+                  In Progress
+                </span>
+              </div>
+              <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
+                Full-stack e-commerce solution with payment processing, inventory management, and admin dashboard. 
+                Built for a local boutique to expand online.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                {['React', 'Stripe', 'Firebase', 'Admin Dashboard'].map(tech => (
+                  <span key={tech} style={{
+                    background: 'rgba(204, 0, 255, 0.2)',
+                    color: '#cc00ff',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '5px',
+                    fontSize: '0.7rem',
+                    fontWeight: 500
+                  }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button style={{
+                  background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  Preview
+                </button>
+                <button style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  View Code
+                </button>
+              </div>
+            </GlassCard>
+
+            <GlassCard>
+              <div style={{
+                width: '100%',
+                height: '200px',
+                background: 'linear-gradient(135deg, #cc00ff, #ffffff)',
+                borderRadius: '10px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.1rem'
+              }}>
+                Task Manager
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
+                  Task Management Tool
+                </h3>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  color: '#00ff88',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 500
+                }}>
+                  Live
+                </span>
+              </div>
+              <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
+                Collaborative project management tool with real-time updates, team messaging, and deadline tracking. 
+                Designed for small creative agencies.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                {['React', 'Node.js', 'MongoDB', 'Real-time'].map(tech => (
+                  <span key={tech} style={{
+                    background: 'rgba(204, 0, 255, 0.2)',
+                    color: '#cc00ff',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '5px',
+                    fontSize: '0.7rem',
+                    fontWeight: 500
+                  }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button style={{
+                  background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  Live Demo
+                </button>
+                <button style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  flex: 1
+                }}>
+                  View Code
+                </button>
+              </div>
+            </GlassCard>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" style={{
+          minHeight: '100vh',
+          padding: isMobile ? '5rem 1rem' : '5rem 5%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{ maxWidth: '1000px', width: '100%' }}>
             <h2 style={{
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
               fontWeight: 700,
@@ -615,502 +874,237 @@ function App() {
               color: '#00ff88',
               textAlign: 'center'
             }}>
-              Featured Projects
+              Skills & Technologies
             </h2>
-            
             <div style={{
               display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: '2rem',
-              maxWidth: '1200px',
-              margin: '0 auto'
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '1.5rem'
             }}>
               <GlassCard>
-                <div style={{
-                  width: '100%',
-                  height: '200px',
-                  background: 'linear-gradient(135deg, #cc00ff, #00ff88)',
-                  borderRadius: '10px',
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: '1.1rem'
-                }}>
-                  Website Builder
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                  <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                    Small Business Website Builder
-                  </h3>
-                  <span style={{
-                    background: 'rgba(0, 255, 136, 0.2)',
-                    color: '#00ff88',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontWeight: 500
-                  }}>
-                    Live
-                  </span>
-                </div>
-                <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                  A drag-and-drop website builder specifically designed for small businesses. 
-                  Includes templates, hosting, domain management, and integrated booking/payment systems. 
-                  Currently serving 15+ local businesses.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                  {['React', 'Firebase', 'Stripe', 'Node.js'].map(tech => (
-                    <span key={tech} style={{
-                      background: 'rgba(204, 0, 255, 0.2)',
-                      color: '#cc00ff',
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Frontend Development</h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {['React', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Tailwind CSS', 'Three.js'].map(skill => (
+                    <span key={skill} style={{
+                      background: 'rgba(0, 255, 136, 0.2)',
+                      color: '#00ff88',
                       padding: '0.25rem 0.5rem',
-                      borderRadius: '5px',
-                      fontSize: '0.7rem',
-                      fontWeight: 500
+                      borderRadius: '4px',
+                      fontSize: '0.8rem'
                     }}>
-                      {tech}
+                      {skill}
                     </span>
                   ))}
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    Live Demo
-                  </button>
-                  <button style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    View Code
-                  </button>
                 </div>
               </GlassCard>
-
               <GlassCard>
-                <div style={{
-                  width: '100%',
-                  height: '200px',
-                  background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                  borderRadius: '10px',
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: '1.1rem'
-                }}>
-                  E-commerce Platform
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                  <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                    E-commerce Platform
-                  </h3>
-                  <span style={{
-                    background: 'rgba(255, 204, 0, 0.2)',
-                    color: '#ffcc00',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontWeight: 500
-                  }}>
-                    In Progress
-                  </span>
-                </div>
-                <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                  Full-stack e-commerce solution with payment processing, inventory management, and admin dashboard. 
-                  Built for a local boutique to expand online.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                  {['React', 'Stripe', 'Firebase', 'Admin Dashboard'].map(tech => (
-                    <span key={tech} style={{
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Backend & Tools</h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {['Node.js', 'Python', 'SQL', 'Firebase', 'Git/GitHub', 'Vercel'].map(skill => (
+                    <span key={skill} style={{
                       background: 'rgba(204, 0, 255, 0.2)',
                       color: '#cc00ff',
                       padding: '0.25rem 0.5rem',
-                      borderRadius: '5px',
-                      fontSize: '0.7rem',
-                      fontWeight: 500
+                      borderRadius: '4px',
+                      fontSize: '0.8rem'
                     }}>
-                      {tech}
+                      {skill}
                     </span>
                   ))}
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    Preview
-                  </button>
-                  <button style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    View Code
-                  </button>
                 </div>
               </GlassCard>
-
               <GlassCard>
-                <div style={{
-                  width: '100%',
-                  height: '200px',
-                  background: 'linear-gradient(135deg, #cc00ff, #ffffff)',
-                  borderRadius: '10px',
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: '1.1rem'
-                }}>
-                  Task Manager
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                  <h3 style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                    Task Management Tool
-                  </h3>
-                  <span style={{
-                    background: 'rgba(0, 255, 136, 0.2)',
-                    color: '#00ff88',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontWeight: 500
-                  }}>
-                    Live
-                  </span>
-                </div>
-                <p style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                  Collaborative project management tool with real-time updates, team messaging, and deadline tracking. 
-                  Designed for small creative agencies.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                  {['React', 'Node.js', 'MongoDB', 'Real-time'].map(tech => (
-                    <span key={tech} style={{
-                      background: 'rgba(204, 0, 255, 0.2)',
-                      color: '#cc00ff',
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Business Understanding</h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {['Customer Service', 'Project Management', 'Budget Management', 'Small Business Operations'].map(skill => (
+                    <span key={skill} style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      color: '#ccc',
                       padding: '0.25rem 0.5rem',
-                      borderRadius: '5px',
-                      fontSize: '0.7rem',
-                      fontWeight: 500
+                      borderRadius: '4px',
+                      fontSize: '0.8rem'
                     }}>
-                      {tech}
+                      {skill}
                     </span>
                   ))}
                 </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    Live Demo
-                  </button>
-                  <button style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
-                    View Code
-                  </button>
-                </div>
+              </GlassCard>
+              <GlassCard>
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>What I Build</h3>
+                <ul style={{ color: '#ccc', margin: 0, paddingLeft: '1.2rem' }}>
+                  <li style={{ marginBottom: '0.5rem' }}>Business websites that convert</li>
+                  <li style={{ marginBottom: '0.5rem' }}>Custom web applications</li>
+                  <li style={{ marginBottom: '0.5rem' }}>E-commerce solutions</li>
+                  <li>Mobile-first designs</li>
+                </ul>
               </GlassCard>
             </div>
           </div>
-        </Section>
-
-        {/* Skills Section */}
-        <Section isActive={activeSection === 'skills'}>
-          <div style={{
-            minHeight: isMobile ? 'auto' : '100vh',
-            paddingTop: isMobile ? '2rem' : '5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <div style={{ maxWidth: '1000px', width: '100%' }}>
-              <h2 style={{
-                fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
-                fontWeight: 700,
-                margin: '0 0 3rem 0',
-                color: '#00ff88',
-                textAlign: 'center'
-              }}>
-                Skills & Technologies
-              </h2>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '1.5rem'
-              }}>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Frontend Development</h3>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    {['React', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Tailwind CSS', 'Three.js'].map(skill => (
-                      <span key={skill} style={{
-                        background: 'rgba(0, 255, 136, 0.2)',
-                        color: '#00ff88',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '4px',
-                        fontSize: '0.8rem'
-                      }}>
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </GlassCard>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Backend & Tools</h3>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    {['Node.js', 'Python', 'SQL', 'Firebase', 'Git/GitHub', 'Vercel'].map(skill => (
-                      <span key={skill} style={{
-                        background: 'rgba(204, 0, 255, 0.2)',
-                        color: '#cc00ff',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '4px',
-                        fontSize: '0.8rem'
-                      }}>
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </GlassCard>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Business Understanding</h3>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                    {['Customer Service', 'Project Management', 'Budget Management', 'Small Business Operations'].map(skill => (
-                      <span key={skill} style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        color: '#ccc',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '4px',
-                        fontSize: '0.8rem'
-                      }}>
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </GlassCard>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>What I Build</h3>
-                  <ul style={{ color: '#ccc', margin: 0, paddingLeft: '1.2rem' }}>
-                    <li style={{ marginBottom: '0.5rem' }}>Business websites that convert</li>
-                    <li style={{ marginBottom: '0.5rem' }}>Custom web applications</li>
-                    <li style={{ marginBottom: '0.5rem' }}>E-commerce solutions</li>
-                    <li>Mobile-first designs</li>
-                  </ul>
-                </GlassCard>
-              </div>
-            </div>
-          </div>
-        </Section>
+        </section>
 
         {/* Contact Section */}
-        <Section isActive={activeSection === 'contact'}>
-          <div style={{
-            minHeight: isMobile ? 'auto' : '100vh',
-            paddingTop: isMobile ? '2rem' : '5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <div style={{ maxWidth: '800px', width: '100%' }}>
-              <h2 style={{
-                fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
-                fontWeight: 700,
-                margin: '0 0 2rem 0',
-                color: '#00ff88',
-                textAlign: 'center'
-              }}>
-                Let's Work Together
-              </h2>
-              
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))', 
-                gap: '2rem' 
-              }}>
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1.5rem 0', fontSize: '1.3rem' }}>Get In Touch</h3>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                      <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>📧</span>
-                      <div>
-                        <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Email</p>
-                        <a href="mailto:isaac@isaacezequielsalas.com" style={{ color: '#ccc', textDecoration: 'none' }}>
-                          isaac@isaacezequielsalas.com
-                        </a>
-                      </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                      <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>📍</span>
-                      <div>
-                        <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Location</p>
-                        <p style={{ margin: 0, color: '#ccc' }}>Phoenix, Arizona</p>
-                      </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>⏰</span>
-                      <div>
-                        <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Response Time</p>
-                        <p style={{ margin: 0, color: '#ccc' }}>Usually within 24 hours</p>
-                      </div>
+        <section id="contact" style={{
+          minHeight: '100vh',
+          padding: isMobile ? '5rem 1rem' : '5rem 5%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{ maxWidth: '800px', width: '100%' }}>
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : 'clamp(2rem, 6vw, 3rem)',
+              fontWeight: 700,
+              margin: '0 0 2rem 0',
+              color: '#00ff88',
+              textAlign: 'center'
+            }}>
+              Let's Work Together
+            </h2>
+            
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))', 
+              gap: '2rem' 
+            }}>
+              <GlassCard>
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1.5rem 0', fontSize: '1.3rem' }}>Get In Touch</h3>
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                    <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>📧</span>
+                    <div>
+                      <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Email</p>
+                      <a href="mailto:isaac@isaacezequielsalas.com" style={{ color: '#ccc', textDecoration: 'none' }}>
+                        isaac@isaacezequielsalas.com
+                      </a>
                     </div>
                   </div>
-                  
-                  <h4 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Connect</h4>
-                  <div style={{ display: 'flex', gap: '1rem' }}>
-                    <a 
-                      href="https://linkedin.com/in/isaac-salas-74825819a" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-block',
-                        padding: '0.5rem 1rem',
-                        background: 'rgba(0, 255, 136, 0.2)',
-                        color: '#00ff88',
-                        textDecoration: 'none',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        fontWeight: 500,
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      LinkedIn
-                    </a>
-                    <a 
-                      href="https://github.com/izequielsalas" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-block',
-                        padding: '0.5rem 1rem',
-                        background: 'rgba(204, 0, 255, 0.2)',
-                        color: '#cc00ff',
-                        textDecoration: 'none',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        fontWeight: 500,
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      GitHub
-                    </a>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                    <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>📍</span>
+                    <div>
+                      <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Location</p>
+                      <p style={{ margin: 0, color: '#ccc' }}>Phoenix, Arizona</p>
+                    </div>
                   </div>
-                </GlassCard>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <span style={{ fontSize: '1.5rem', marginRight: '1rem' }}>⏰</span>
+                    <div>
+                      <p style={{ margin: '0 0 0.2rem 0', fontWeight: 600, color: '#00ff88' }}>Response Time</p>
+                      <p style={{ margin: 0, color: '#ccc' }}>Usually within 24 hours</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <h4 style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Connect</h4>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <a 
+                    href="https://linkedin.com/in/isaac-salas-74825819a" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.5rem 1rem',
+                      background: 'rgba(0, 255, 136, 0.2)',
+                      color: '#00ff88',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    LinkedIn
+                  </a>
+                  <a 
+                    href="https://github.com/izequielsalas" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.5rem 1rem',
+                      background: 'rgba(204, 0, 255, 0.2)',
+                      color: '#cc00ff',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </GlassCard>
 
-                <GlassCard>
-                  <h3 style={{ color: '#cc00ff', margin: '0 0 1.5rem 0', fontSize: '1.3rem' }}>Ready to Build Something That Works?</h3>
-                  <p style={{ color: '#ccc', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
-                    Let's talk about your project and how my unique background can help your business grow. 
-                    I understand both the technical requirements and the business realities that make websites successful.
-                  </p>
-                  
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h4 style={{ color: '#00ff88', margin: '0 0 1rem 0', fontSize: '1rem' }}>What I Build:</h4>
-                    <ul style={{ color: '#ccc', margin: 0, paddingLeft: '1.2rem' }}>
-                      <li style={{ marginBottom: '0.5rem' }}>Business websites that convert visitors into customers</li>
-                      <li style={{ marginBottom: '0.5rem' }}>Custom web applications that solve specific problems</li>
-                      <li style={{ marginBottom: '0.5rem' }}>E-commerce stores that actually sell products</li>
-                      <li>Mobile-first designs that work on every device</li>
-                    </ul>
-                  </div>
-                  
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button
-                      onClick={() => window.location.href = 'mailto:isaac@isaacezequielsalas.com?subject=Let\'s Work Together'}
-                      style={{
-                        background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                        border: 'none',
-                        padding: '1rem 1.5rem',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '1rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        flex: 1,
-                        transition: 'transform 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                    >
-                      Start a Conversation
-                    </button>
-                    <button
-                      onClick={() => window.open('/resume.pdf', '_blank')}
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        padding: '1rem 1.5rem',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '1rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        flex: 1,
-                        transition: 'transform 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
-                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                    >
-                      Download Resume
-                    </button>
-                  </div>
-                </GlassCard>
-              </div>
+              <GlassCard>
+                <h3 style={{ color: '#cc00ff', margin: '0 0 1.5rem 0', fontSize: '1.3rem' }}>Ready to Build Something That Works?</h3>
+                <p style={{ color: '#ccc', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
+                  Let's talk about your project and how my unique background can help your business grow. 
+                  I understand both the technical requirements and the business realities that make websites successful.
+                </p>
+                
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: '#00ff88', margin: '0 0 1rem 0', fontSize: '1rem' }}>What I Build:</h4>
+                  <ul style={{ color: '#ccc', margin: 0, paddingLeft: '1.2rem' }}>
+                    <li style={{ marginBottom: '0.5rem' }}>Business websites that convert visitors into customers</li>
+                    <li style={{ marginBottom: '0.5rem' }}>Custom web applications that solve specific problems</li>
+                    <li style={{ marginBottom: '0.5rem' }}>E-commerce stores that actually sell products</li>
+                    <li>Mobile-first designs that work on every device</li>
+                  </ul>
+                </div>
+                
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    onClick={() => window.location.href = 'mailto:isaac@isaacezequielsalas.com?subject=Let\'s Work Together'}
+                    style={{
+                      background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                      border: 'none',
+                      padding: '1rem 1.5rem',
+                      borderRadius: '10px',
+                      color: 'white',
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      flex: 1,
+                      transition: 'transform 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                  >
+                    Start a Conversation
+                  </button>
+                  <button
+                    onClick={() => window.open('/resume.pdf', '_blank')}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      padding: '1rem 1.5rem',
+                      borderRadius: '10px',
+                      color: 'white',
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      flex: 1,
+                      transition: 'transform 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                  >
+                    Download Resume
+                  </button>
+                </div>
+              </GlassCard>
             </div>
           </div>
-        </Section>
+        </section>
       </div>
 
       <style jsx>{`
+        body {
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+        }
+        
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -1130,7 +1124,7 @@ function App() {
           50% { opacity: 0.7; }
         }
       `}</style>
-    </div>
+    </>
   );
 }
 

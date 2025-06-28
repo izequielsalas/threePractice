@@ -31,7 +31,9 @@
       background: #000000;
       color: #ffffff;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;   /* keep horizontal overflow off if you like */
+      overflow-y: auto;     /* allow vertical scroll */
+      min-height: 100vh;    /* let the page grow taller than one screen */
     }
     
     #root {
