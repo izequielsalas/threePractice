@@ -1081,32 +1081,38 @@ function App() {
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://website-builder-demo.vercel.app', '_blank')}
+                    style={{
+                      background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                      border: 'none',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     Live Demo
                   </button>
                 </MagneticElement>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://github.com/izequielsalas/website-builder', '_blank')}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     View Code
                   </button>
                 </MagneticElement>
@@ -1134,22 +1140,22 @@ function App() {
                   E-commerce Platform
                 </h3>
                 <span style={{
-                  background: 'rgba(255, 204, 0, 0.2)',
-                  color: '#ffcc00',
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  color: '#00ff88',
                   padding: '0.2rem 0.5rem',
                   borderRadius: '4px',
                   fontSize: '0.7rem',
                   fontWeight: 500
                 }}>
-                  In Progress
+                  Live
                 </span>
               </div>
               <p data-cursor="text" style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                Full-stack e-commerce solution with payment processing, inventory management, and admin dashboard. 
-                Built for a local boutique to expand online.
+                Full-stack e-commerce solution with product catalog, shopping cart, and checkout flow. 
+                A fully functional sticker shop demonstrating modern e-commerce design and functionality.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                {['React', 'Stripe', 'Firebase', 'Admin Dashboard'].map(tech => (
+                {['React', 'Shopping Cart', 'Responsive Design', 'Modern UI'].map(tech => (
                   <span key={tech} style={{
                     background: 'rgba(204, 0, 255, 0.2)',
                     color: '#cc00ff',
@@ -1164,32 +1170,38 @@ function App() {
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://sticker-shop-nine.vercel.app', '_blank')}
+                    style={{
+                      background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                      border: 'none',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     Preview
                   </button>
                 </MagneticElement>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://github.com/izequielsalas/ecommerce-platform', '_blank')}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     View Code
                   </button>
                 </MagneticElement>
@@ -1247,32 +1259,38 @@ function App() {
               </div>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://task-manager-demo.vercel.app', '_blank')}
+                    style={{
+                      background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
+                      border: 'none',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     Live Demo
                   </button>
                 </MagneticElement>
                 <MagneticElement strength={0.2} radius={50}>
-                  <button data-cursor="magnetic" style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontSize: '0.8rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    flex: 1
-                  }}>
+                  <button 
+                    data-cursor="magnetic" 
+                    onClick={() => window.open('https://github.com/izequielsalas/task-manager', '_blank')}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '8px',
+                      color: 'white',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      flex: 1
+                    }}>
                     View Code
                   </button>
                 </MagneticElement>
@@ -1418,7 +1436,7 @@ function App() {
                 </div>
                 
                 <h4 data-cursor="text" style={{ color: '#cc00ff', margin: '0 0 1rem 0' }}>Connect</h4>
-                <div style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))', gap: '0.5rem' }}>
                   <MagneticElement strength={0.2} radius={60}>
                     <a 
                       href="https://linkedin.com/in/isaac-salas-74825819a" 
@@ -1432,9 +1450,11 @@ function App() {
                         color: '#00ff88',
                         textDecoration: 'none',
                         borderRadius: '8px',
-                        fontSize: '0.9rem',
+                        fontSize: '0.8rem',
                         fontWeight: 500,
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
                       }}
                     >
                       LinkedIn
@@ -1453,12 +1473,106 @@ function App() {
                         color: '#cc00ff',
                         textDecoration: 'none',
                         borderRadius: '8px',
-                        fontSize: '0.9rem',
+                        fontSize: '0.8rem',
                         fontWeight: 500,
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
                       }}
                     >
                       GitHub
+                    </a>
+                  </MagneticElement>
+                  <MagneticElement strength={0.2} radius={60}>
+                    <a 
+                      href="https://x.com/izequielsalas" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-cursor="magnetic"
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        color: '#ccc',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.8rem',
+                        fontWeight: 500,
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
+                      }}
+                    >
+                      X (Twitter)
+                    </a>
+                  </MagneticElement>
+                  <MagneticElement strength={0.2} radius={60}>
+                    <a 
+                      href="https://instagram.com/izequielsalas" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-cursor="magnetic"
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(255, 105, 180, 0.2)',
+                        color: '#ff69b4',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.8rem',
+                        fontWeight: 500,
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
+                      }}
+                    >
+                      Instagram
+                    </a>
+                  </MagneticElement>
+                  <MagneticElement strength={0.2} radius={60}>
+                    <a 
+                      href="https://youtube.com/@isaacezequielsalas" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-cursor="magnetic"
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(255, 0, 0, 0.2)',
+                        color: '#ff4444',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.8rem',
+                        fontWeight: 500,
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
+                      }}
+                    >
+                      YouTube
+                    </a>
+                  </MagneticElement>
+                  <MagneticElement strength={0.2} radius={60}>
+                    <a 
+                      href="https://reddit.com/u/izequielsalas" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-cursor="magnetic"
+                      style={{
+                        display: 'inline-block',
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(255, 69, 0, 0.2)',
+                        color: '#ff4500',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.8rem',
+                        fontWeight: 500,
+                        transition: 'all 0.3s ease',
+                        textAlign: 'center',
+                        width: '100%'
+                      }}
+                    >
+                      Reddit
                     </a>
                   </MagneticElement>
                 </div>
@@ -1489,39 +1603,17 @@ function App() {
                       style={{
                         background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
                         border: 'none',
-                        padding: '1rem 1.5rem',
+                        padding: '1rem 2rem',
                         borderRadius: '10px',
                         color: 'white',
                         fontSize: '1rem',
                         fontWeight: 600,
                         cursor: 'pointer',
-                        flex: 1,
                         transition: 'all 0.3s ease',
-                        width: isMobile ? '100%' : 'auto'
+                        width: '100%'
                       }}
                     >
                       Start a Conversation
-                    </button>
-                  </MagneticElement>
-                  <MagneticElement strength={0.3} radius={80}>
-                    <button
-                      data-cursor="magnetic"
-                      onClick={() => window.open('/resume.pdf', '_blank')}
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        padding: '1rem 1.5rem',
-                        borderRadius: '10px',
-                        color: 'white',
-                        fontSize: '1rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        flex: 1,
-                        transition: 'all 0.3s ease',
-                        width: isMobile ? '100%' : 'auto'
-                      }}
-                    >
-                      Download Resume
                     </button>
                   </MagneticElement>
                 </div>
