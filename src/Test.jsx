@@ -1009,6 +1009,9 @@ function App() {
         </section>
 
         {/* Projects Section */}
+{/* Projects Section */}
+{/* Projects Section */}
+{/* Projects Section */}
         <section id="projects" style={{
           minHeight: '100vh',
           padding: isMobile ? '5rem 1rem' : '5rem 5%'
@@ -1034,95 +1037,6 @@ function App() {
               <div style={{
                 width: '100%',
                 height: '200px',
-                background: 'linear-gradient(135deg, #cc00ff, #00ff88)',
-                borderRadius: '10px',
-                marginBottom: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '1.1rem'
-              }}>
-                Website Builder
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <h3 data-cursor="text" style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                  Small Business Website Builder
-                </h3>
-                <span style={{
-                  background: 'rgba(0, 255, 136, 0.2)',
-                  color: '#00ff88',
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '4px',
-                  fontSize: '0.7rem',
-                  fontWeight: 500
-                }}>
-                  Live
-                </span>
-              </div>
-              <p data-cursor="text" style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                A drag-and-drop website builder specifically designed for small businesses. 
-                Includes templates, hosting, domain management, and integrated booking/payment systems.
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                {['React', 'Firebase', 'Stripe', 'Node.js'].map(tech => (
-                  <span key={tech} style={{
-                    background: 'rgba(204, 0, 255, 0.2)',
-                    color: '#cc00ff',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '5px',
-                    fontSize: '0.7rem',
-                    fontWeight: 500
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <MagneticElement strength={0.2} radius={50}>
-                  <button 
-                    data-cursor="magnetic" 
-                    onClick={() => window.open('https://website-builder-demo.vercel.app', '_blank')}
-                    style={{
-                      background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
-                      border: 'none',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      flex: 1
-                    }}>
-                    Live Demo
-                  </button>
-                </MagneticElement>
-                <MagneticElement strength={0.2} radius={50}>
-                  <button 
-                    data-cursor="magnetic" 
-                    onClick={() => window.open('https://github.com/izequielsalas/website-builder', '_blank')}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      flex: 1
-                    }}>
-                    View Code
-                  </button>
-                </MagneticElement>
-              </div>
-            </GlassCard>
-
-            <GlassCard data-cursor="project" magnetic={true}>
-              <div style={{
-                width: '100%',
-                height: '200px',
                 background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
                 borderRadius: '10px',
                 marginBottom: '1rem',
@@ -1133,11 +1047,11 @@ function App() {
                 fontWeight: 'bold',
                 fontSize: '1.1rem'
               }}>
-                E-commerce Platform
+                Sticker Shop
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <h3 data-cursor="text" style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                  E-commerce Platform
+                  E-commerce Sticker Shop
                 </h3>
                 <span style={{
                   background: 'rgba(0, 255, 136, 0.2)',
@@ -1151,11 +1065,11 @@ function App() {
                 </span>
               </div>
               <p data-cursor="text" style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                Full-stack e-commerce solution with product catalog, shopping cart, and checkout flow. 
-                A fully functional sticker shop demonstrating modern e-commerce design and functionality.
+                Full-featured e-commerce platform for custom stickers with shopping cart, product catalog, 
+                and modern responsive design. Built with React and focused on user experience.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                {['React', 'Shopping Cart', 'Responsive Design', 'Modern UI'].map(tech => (
+                {['React', 'JavaScript', 'CSS3', 'Responsive Design'].map(tech => (
                   <span key={tech} style={{
                     background: 'rgba(204, 0, 255, 0.2)',
                     color: '#cc00ff',
@@ -1182,27 +1096,9 @@ function App() {
                       fontSize: '0.8rem',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      flex: 1
+                      width: '100%'
                     }}>
-                    Preview
-                  </button>
-                </MagneticElement>
-                <MagneticElement strength={0.2} radius={50}>
-                  <button 
-                    data-cursor="magnetic" 
-                    onClick={() => window.open('https://github.com/izequielsalas/ecommerce-platform', '_blank')}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      flex: 1
-                    }}>
-                    View Code
+                    Live Demo
                   </button>
                 </MagneticElement>
               </div>
@@ -1212,7 +1108,7 @@ function App() {
               <div style={{
                 width: '100%',
                 height: '200px',
-                background: 'linear-gradient(135deg, #cc00ff, #ffffff)',
+                background: 'linear-gradient(135deg, #cc00ff, #00ff88)',
                 borderRadius: '10px',
                 marginBottom: '1rem',
                 display: 'flex',
@@ -1222,11 +1118,62 @@ function App() {
                 fontWeight: 'bold',
                 fontSize: '1.1rem'
               }}>
-                Task Manager
+                Proofing App
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <h3 data-cursor="text" style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
-                  Task Management Tool
+                  Print Proofing Application
+                </h3>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  color: '#00ff88',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 500
+                }}>
+                  GitHub
+                </span>
+              </div>
+              <p data-cursor="text" style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
+                Professional proofing system for print businesses. Built from 12+ years experience 
+                at Cesargraphics, streamlining the approval process for custom print projects.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                {['JavaScript', 'Print Industry', 'Client Management', 'File Handling'].map(tech => (
+                  <span key={tech} style={{
+                    background: 'rgba(204, 0, 255, 0.2)',
+                    color: '#cc00ff',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '5px',
+                    fontSize: '0.7rem',
+                    fontWeight: 500
+                  }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </GlassCard>
+
+            <GlassCard data-cursor="project" magnetic={true}>
+              <div style={{
+                width: '100%',
+                height: '200px',
+                background: 'linear-gradient(135deg, #ffffff, #cc00ff)',
+                borderRadius: '10px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.1rem'
+              }}>
+                Work Grid
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <h3 data-cursor="text" style={{ color: '#00ff88', margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>
+                  Dynamic Work Grid
                 </h3>
                 <span style={{
                   background: 'rgba(0, 255, 136, 0.2)',
@@ -1240,11 +1187,11 @@ function App() {
                 </span>
               </div>
               <p data-cursor="text" style={{ color: '#ccc', margin: '0 0 1rem 0', lineHeight: 1.5, fontSize: '0.9rem' }}>
-                Collaborative project management tool with real-time updates, team messaging, and deadline tracking. 
-                Designed for small creative agencies.
+                Interactive grid layout system for showcasing projects and portfolio work. 
+                Features responsive design and dynamic content organization with smooth animations.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                {['React', 'Node.js', 'MongoDB', 'Real-time'].map(tech => (
+                {['JavaScript', 'CSS Grid', 'Animation', 'Portfolio'].map(tech => (
                   <span key={tech} style={{
                     background: 'rgba(204, 0, 255, 0.2)',
                     color: '#cc00ff',
@@ -1261,7 +1208,7 @@ function App() {
                 <MagneticElement strength={0.2} radius={50}>
                   <button 
                     data-cursor="magnetic" 
-                    onClick={() => window.open('https://task-manager-demo.vercel.app', '_blank')}
+                    onClick={() => window.open('https://work-grid-56db3.web.app', '_blank')}
                     style={{
                       background: 'linear-gradient(135deg, #00ff88, #cc00ff)',
                       border: 'none',
@@ -1271,27 +1218,9 @@ function App() {
                       fontSize: '0.8rem',
                       fontWeight: 500,
                       cursor: 'pointer',
-                      flex: 1
+                      width: '100%'
                     }}>
                     Live Demo
-                  </button>
-                </MagneticElement>
-                <MagneticElement strength={0.2} radius={50}>
-                  <button 
-                    data-cursor="magnetic" 
-                    onClick={() => window.open('https://github.com/izequielsalas/task-manager', '_blank')}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '8px',
-                      color: 'white',
-                      fontSize: '0.8rem',
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      flex: 1
-                    }}>
-                    View Code
                   </button>
                 </MagneticElement>
               </div>
